@@ -1,7 +1,7 @@
 name: Deploy para AWS S3
 
 on:
-  workflow_dispatch:  # Disparo manual com aprovação
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -52,7 +52,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     environment:
       name: production
-      url: http://Teste_deploy_atividade_Puc_minas_Luiz.s3-website-us-east-1.amazonaws.com
+      url: http://teste-deploy-atividade-puc-minas-luiz.s3-website-us-east-1.amazonaws.com
 
     steps:
       - name: Baixar código novamente
@@ -66,4 +66,4 @@ jobs:
           aws-region: us-east-1
 
       - name: Enviar site estático para o S3
-        run: aws s3 sync ./public s3://Teste_deploy_atividade_Puc_minas_Luiz --delete
+        run: aws s3 sync ./public s3://teste-deploy-atividade-puc-minas-luiz --delete
