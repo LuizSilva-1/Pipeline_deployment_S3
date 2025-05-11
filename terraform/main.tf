@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "deploy_bucket" {
-  bucket        = "teste-deploy-atividade-puc-minas-luiz"
+  bucket        = "deploy-site-puc-minas-luiz-2025"
   force_destroy = true
 
   tags = {

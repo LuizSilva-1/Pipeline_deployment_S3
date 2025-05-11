@@ -52,7 +52,7 @@ jobs:
     if: github.event_name == 'workflow_dispatch'
     environment:
       name: production
-      url: http://teste-deploy-atividade-puc-minas-luiz.s3-website-us-east-1.amazonaws.com
+      url: http://deploy-site-puc-minas-luiz-2025.s3-website-us-east-1.amazonaws.com
 
     steps:
       - name: Baixar código novamente
@@ -66,4 +66,4 @@ jobs:
           aws-region: us-east-1
 
       - name: Enviar site estático para o S3
-        run: aws s3 sync ./public s3://teste-deploy-atividade-puc-minas-luiz --delete
+        run: aws s3 sync ./public s3://deploy-site-puc-minas-luiz-2025 --delete
