@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "deploy_bucket" {
-  bucket        = "meu-bucket-deploy-automacao-luiz"
+  bucket        = "Teste_deploy_atividade_Puc_minas_Luiz"
   force_destroy = true
 
   tags = {
