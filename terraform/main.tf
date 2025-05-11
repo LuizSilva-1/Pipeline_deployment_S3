@@ -1,8 +1,7 @@
 provider "aws" {
-  region = "sa-east-1"
+  region = "us-east-1"
 }
 
-# Criação do bucket S3
 resource "aws_s3_bucket" "deploy_bucket" {
   bucket        = "meu-bucket-deploy-automacao-luiz"
   force_destroy = true
@@ -14,7 +13,6 @@ resource "aws_s3_bucket" "deploy_bucket" {
   }
 }
 
-# Configuração do bucket como site estático
 resource "aws_s3_bucket_website_configuration" "static_site" {
   bucket = aws_s3_bucket.deploy_bucket.id
 
@@ -27,7 +25,6 @@ resource "aws_s3_bucket_website_configuration" "static_site" {
   }
 }
 
-# Tornar o bucket público para leitura
 resource "aws_s3_bucket_policy" "public_read" {
   bucket = aws_s3_bucket.deploy_bucket.id
 
