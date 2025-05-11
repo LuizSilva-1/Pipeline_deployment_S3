@@ -2,9 +2,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Bucket com nome único e válido
+# Criação do bucket com nome único
 resource "aws_s3_bucket" "deploy_bucket" {
-  bucket        = "deploy-site-puc-minas-luiz-2025"
+  bucket        = "meepo-arc-luiz-puc-minas"
   force_destroy = true
 
   tags = {
@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "deploy_bucket" {
   }
 }
 
-# Desativa o bloqueio de acesso público para permitir site estático
+# Desbloqueia o acesso público (obrigatório para sites estáticos)
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket = aws_s3_bucket.deploy_bucket.id
 
@@ -24,7 +24,7 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
   restrict_public_buckets = false
 }
 
-# Configura o bucket como site estático
+# Configura como site estático
 resource "aws_s3_bucket_website_configuration" "static_site" {
   bucket = aws_s3_bucket.deploy_bucket.id
 
@@ -37,7 +37,7 @@ resource "aws_s3_bucket_website_configuration" "static_site" {
   }
 }
 
-# Torna o bucket público para leitura do site
+# Permite leitura pública do conteúdo
 resource "aws_s3_bucket_policy" "public_read" {
   bucket = aws_s3_bucket.deploy_bucket.id
 
