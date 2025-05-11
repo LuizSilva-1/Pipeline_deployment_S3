@@ -1,32 +1,58 @@
 name: Deploy para AWS S3
 
 on:
+  workflow_dispatch:  # Disparo manual com aprovação
   pull_request:
     branches:
-      - main        # Quando alguém abrir um PR para a branch main
-  workflow_dispatch: # Permite execução manual com aprovação
+      - main
 
 jobs:
   build:
     name: Build e Validação
     runs-on: ubuntu-latest
-
     steps:
       - name: Baixar código do repositório
         uses: actions/checkout@v4
-
-      - name: Simular validação da aplicação
+      - name: Simular validação
         run: echo "Build e testes simulados com sucesso."
+
+  terraform-apply:
+    name: Criar bucket com Terraform
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Inicializar Terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform init
+
+      - name: Aplicar Terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform apply -auto-approve
 
   deploy:
     name: Deploy na AWS S3
-    needs: build
+    needs: terraform-apply
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
     environment:
       name: production
       url: http://meu-bucket-deploy-automacao-luiz.s3-website-us-east-1.amazonaws.com
-
 
     steps:
       - name: Baixar código novamente
@@ -37,8 +63,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1  # ou a região do seu bucket
+          aws-region: us-east-1
 
-      - name: Fazer upload para o S3
+      - name: Enviar site estático para o S3
         run: aws s3 sync ./public s3://meu-bucket-deploy-automacao-luiz --delete
-
