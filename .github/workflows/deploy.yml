@@ -1,1 +1,42 @@
-#criar uma pipeline para rodar o s3 na aws. 
+name: Deploy para AWS S3
+
+on:
+  pull_request:
+    branches:
+      - main        # Quando alguém abrir um PR para a branch main
+  workflow_dispatch: # Permite execução manual com aprovação
+
+jobs:
+  build:
+    name: Build e Validação
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Simular validação da aplicação
+        run: echo "Build e testes simulados com sucesso."
+
+  deploy:
+    name: Deploy na AWS S3
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    environment:
+      name: production
+      url: https://s3.amazonaws.com/SEU_BUCKET_NAME  # substitua pelo seu bucket
+
+    steps:
+      - name: Baixar código novamente
+        uses: actions/checkout@v4
+
+      - name: Configurar credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # ou a região do seu bucket
+
+      - name: Fazer upload para o S3
+        run: aws s3 sync ./public s3://SEU_BUCKET_NAME --delete
