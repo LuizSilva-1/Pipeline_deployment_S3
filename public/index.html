@@ -14,8 +14,8 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f2f4f8;
-      color: #333;
+      background: #edf2f7;
+      color: #2d3748;
       margin: 0;
       padding: 60px 20px;
       text-align: center;
@@ -25,27 +25,31 @@
       font-size: 2.8rem;
       color: #1a202c;
       margin-bottom: 20px;
-      text-shadow: 1px 1px 1px #ccc;
+      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       color: #4a5568;
       margin-bottom: 30px;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .badge {
       display: inline-block;
-      padding: 10px 20px;
+      padding: 10px 24px;
       background-color: #2b6cb0;
       color: #fff;
-      font-weight: bold;
-      border-radius: 30px;
+      font-weight: 600;
+      border-radius: 50px;
       font-size: 0.95rem;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
       margin-top: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .badge:hover {
+      background-color: #2c5282;
     }
 
     .highlight-devops {
@@ -54,14 +58,15 @@
     }
 
     .icons {
-      margin-top: 40px;
-      font-size: 2rem;
+      margin-top: 45px;
+      font-size: 2.2rem;
     }
 
     .icons i {
-      margin: 0 15px;
-      color: #2d3748;
+      margin: 0 18px;
+      color: #4a5568;
       transition: transform 0.3s ease, color 0.3s ease;
+      cursor: pointer;
     }
 
     .icons i:hover {
@@ -74,25 +79,38 @@
       font-size: 0.95rem;
       color: #718096;
     }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .icons {
+        font-size: 1.8rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>🚀 Deploy via GitHub Actions com Terraform</h1>
-  <p>
-    Este site estático foi gerado automaticamente na AWS S3<br />
-    como parte do trabalho de pós-graduação em <span class="highlight-devops">DevOps</span>,<br />
-    aplicando práticas modernas de CI/CD e infraestrutura como código.
-  </p>
+  <main>
+    <h1>🚀 Deploy via GitHub Actions com Terraform</h1>
+    <section>
+      <p>
+        Este site estático foi gerado automaticamente na AWS S3<br />
+        como parte do trabalho de pós-graduação em <span class="highlight-devops">DevOps</span>.<br />
+        Foram aplicadas práticas modernas de CI/CD e infraestrutura como código.
+      </p>
+      <div class="badge">100% Automatizado</div>
+    </section>
 
-  <div class="badge">100% Automatizado</div>
+    <div class="icons" aria-label="Ícones representando tecnologias usadas">
+      <i class="fab fa-github" title="GitHub" aria-label="GitHub"></i>
+      <i class="fas fa-code-branch" title="CI/CD" aria-label="CI/CD"></i>
+      <i class="fas fa-cubes" title="Terraform" aria-label="Terraform"></i>
+      <i class="fas fa-cloud" title="AWS S3" aria-label="AWS S3"></i>
+    </div>
 
-  <div class="icons">
-    <i class="fab fa-github" title="GitHub"></i>
-    <i class="fas fa-code-branch" title="CI/CD"></i>
-    <i class="fas fa-cubes" title="Terraform"></i>
-    <i class="fas fa-cloud" title="AWS S3"></i>
-  </div>
-
-  <footer>© Luiz Fernando – Pós DevOps</footer>
+    <footer>© Luiz Fernando – Pós DevOps</footer>
+  </main>
 </body>
 </html>
